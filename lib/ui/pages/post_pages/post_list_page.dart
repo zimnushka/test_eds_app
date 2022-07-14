@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test_eds_app/ui/pages/post_pages/post_page.dart';
+import 'package:test_eds_app/ui/pages/Post_pages/post_page.dart';
 
 import '../../../data/models/post_model.dart';
 import '../../../data/repositories/posts_repository.dart';
