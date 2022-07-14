@@ -9,21 +9,21 @@ class UserContactInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           ListTile(
             title: Text(
               user.name,
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
           ListTile(
             title: Text(user.email),
-            subtitle: Text("email"),
+            subtitle: const Text("email"),
             trailing: IconButton(
-              icon: Icon(Icons.copy),
+              icon: const Icon(Icons.copy),
               onPressed: () {
                 Clipboard.setData(ClipboardData(text: user.email));
               },
@@ -31,9 +31,9 @@ class UserContactInfo extends StatelessWidget {
           ),
           ListTile(
             title: Text(user.phone),
-            subtitle: Text("phone"),
+            subtitle: const Text("phone"),
             trailing: IconButton(
-              icon: Icon(Icons.copy),
+              icon: const Icon(Icons.copy),
               onPressed: () {
                 Clipboard.setData(ClipboardData(text: user.phone));
               },
@@ -41,9 +41,9 @@ class UserContactInfo extends StatelessWidget {
           ),
           ListTile(
             title: Text(user.website),
-            subtitle: Text("website"),
+            subtitle: const Text("website"),
             trailing: IconButton(
-              icon: Icon(Icons.copy),
+              icon: const Icon(Icons.copy),
               onPressed: () {
                 Clipboard.setData(ClipboardData(text: user.website));
               },

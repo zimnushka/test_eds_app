@@ -10,7 +10,7 @@ class Photo {
       required this.id,
       required this.thumbnailUrl,
       required this.title,
-      required this.url});
+      required this.url,});
 
   static Photo fromJson(Map<String, dynamic> json) {
     return Photo(

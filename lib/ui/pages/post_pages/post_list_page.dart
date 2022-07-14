@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test_eds_app/ui/pages/post_pages/post_page.dart';
+import 'package:test_eds_app/ui/pages/Post_pages/Post_page.dart';
 
 import '../../../data/models/post_model.dart';
 import '../../../data/repositories/posts_repository.dart';
@@ -33,13 +33,13 @@ class _PostsListPageState extends State<PostsListPage> {
                         Navigator.of(context)
                             .push(MaterialPageRoute(builder: (context) {
                           return PostPage(post: snapshot.data![index]);
-                        }));
+                        },),);
                       },
                     );
-                  });
+                  },);
             }
-            return LinearProgressIndicator();
-          }),
+            return const LinearProgressIndicator();
+          },),
     );
   }
 }

@@ -20,12 +20,12 @@ class UserCard extends StatelessWidget {
               item.id.toString(),
               style:
                   TextStyle(color: Theme.of(context).scaffoldBackgroundColor),
-            ))),
+            ),),),
       ),
       onTap: onTap,
       title: Text(item.username),
       subtitle: Text(item.name),
-      trailing: Icon(Icons.arrow_forward_ios),
+      trailing: const Icon(Icons.arrow_forward_ios),
     );
   }
 }

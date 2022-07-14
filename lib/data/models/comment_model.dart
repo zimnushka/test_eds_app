@@ -10,7 +10,7 @@ class Comment {
       required this.email,
       required this.id,
       required this.name,
-      required this.postId});
+      required this.postId,});
 
   static Comment fromJson(Map<String, dynamic> json) {
     return Comment(

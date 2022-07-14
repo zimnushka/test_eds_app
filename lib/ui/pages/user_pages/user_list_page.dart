@@ -30,13 +30,13 @@ class _UsersListPageState extends State<UsersListPage> {
                         Navigator.of(context)
                             .push(MaterialPageRoute(builder: (context) {
                           return UserPage(user: snapshot.data![index]);
-                        }));
+                        },),);
                       },
                     );
-                  });
+                  },);
             }
-            return LinearProgressIndicator();
-          }),
+            return const LinearProgressIndicator();
+          },),
     );
   }
 }
