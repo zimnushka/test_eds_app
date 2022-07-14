@@ -27,7 +27,7 @@ class CompanyCard extends StatelessWidget {
               subtitle: Text(item.bs),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
+              padding: const EdgeInsets.only(bottom: 10),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -39,7 +39,7 @@ class CompanyCard extends StatelessWidget {
             ClipRRect(
               borderRadius: const BorderRadius.all(Radius.circular(10)),
               child: SizedBox(
-                height: 300,
+                height: 200,
                 width: double.infinity,
                 child: Stack(
                   children: [

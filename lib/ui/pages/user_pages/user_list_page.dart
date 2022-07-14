@@ -29,7 +29,7 @@ class _UsersListPageState extends State<UsersListPage> {
                       onTap: () {
                         Navigator.of(context)
                             .push(MaterialPageRoute(builder: (context) {
-                          return UserPage(id: snapshot.data![index].id);
+                          return UserPage(user: snapshot.data![index]);
                         }));
                       },
                     );
