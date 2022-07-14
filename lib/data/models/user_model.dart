@@ -32,7 +32,7 @@ class User {
       name: json["name"],
       phone: json["phone"],
       username: json["username"],
-      website: json["website)"],
+      website: json["website"],
     );
   }
 }

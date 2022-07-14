@@ -26,7 +26,7 @@ abstract class Repository {
     }
   }
 
-  static Future<ResponseData> getRequest(
+  Future<ResponseData> getRequest(
     String url, {
     Map<String, String>? headers,
   }) async {
@@ -44,7 +44,7 @@ abstract class Repository {
     }
   }
 
-  static Future<ResponseData> putRequest({
+  Future<ResponseData> putRequest({
     required String url,
     required String parametrs,
     required Map<String, String> headers,
@@ -63,7 +63,7 @@ abstract class Repository {
     }
   }
 
-  static Future<ResponseData> deleteRequest({
+  Future<ResponseData> deleteRequest({
     required String url,
     required Map<String, String> headers,
   }) async {
