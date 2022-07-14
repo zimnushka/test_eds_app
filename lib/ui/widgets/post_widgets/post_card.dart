@@ -8,19 +8,24 @@ class PostCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+    return Container(
+      decoration: BoxDecoration(
+          border: Border.all(width: 0.1, color: Theme.of(context).shadowColor)),
       child: ListTile(
+        contentPadding: const EdgeInsets.all(16),
         onTap: onTap,
         title: Text(
           item.title,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
-        subtitle: Text(
-          item.body,
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
+        subtitle: Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: Text(
+            item.body,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
       ),
     );

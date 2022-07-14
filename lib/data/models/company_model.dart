@@ -4,7 +4,7 @@ class Company {
   final String bs;
 
   const Company(
-      {required this.bs, required this.catchPhrase, required this.name});
+      {required this.bs, required this.catchPhrase, required this.name,});
 
   static Company fromJson(Map<String, dynamic> json) {
     return Company(

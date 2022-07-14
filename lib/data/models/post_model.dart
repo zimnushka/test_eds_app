@@ -8,7 +8,7 @@ class Post {
       {required this.body,
       required this.id,
       required this.title,
-      required this.userId});
+      required this.userId,});
 
   static Post fromJson(Map<String, dynamic> json) {
     return Post(

@@ -22,7 +22,7 @@ class CompanyCard extends StatelessWidget {
               contentPadding: EdgeInsets.zero,
               title: Text(
                 item.name,
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               subtitle: Text(item.bs),
             ),

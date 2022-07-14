@@ -5,12 +5,13 @@ class Comment {
   final String email;
   final String body;
 
-  const Comment(
-      {required this.body,
-      required this.email,
-      required this.id,
-      required this.name,
-      required this.postId});
+  const Comment({
+    required this.body,
+    required this.email,
+    required this.id,
+    required this.name,
+    required this.postId,
+  });
 
   static Comment fromJson(Map<String, dynamic> json) {
     return Comment(
@@ -21,4 +22,7 @@ class Comment {
       postId: json["postId"],
     );
   }
+
+  Map get toJson =>
+      {"postId": postId, "name": name, "email": email, "body": body};
 }

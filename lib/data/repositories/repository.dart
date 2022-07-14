@@ -7,7 +7,7 @@ abstract class Repository {
   static const int _countSecTimeOut = 10;
   static const String _timeOutMessage = "Ошибка подключения к серверу";
 
-  static Future<ResponseData> postRequest({
+  Future<ResponseData> postRequest({
     required String url,
     required String parametrs,
     required Map<String, String> headers,

@@ -12,13 +12,13 @@ class Address {
       required this.geo,
       required this.street,
       required this.suite,
-      required this.zipcode});
+      required this.zipcode,});
 
   static Address fromJson(Map<String, dynamic> json) {
     return Address(
       city: json["city"],
       geo: Coord(double.tryParse(json["geo"]["lat"]) ?? 0,
-          double.tryParse(json["geo"]["lng"]) ?? 0),
+          double.tryParse(json["geo"]["lng"]) ?? 0,),
       street: json["street"],
       suite: json["suite"],
       zipcode: json["zipcode"],

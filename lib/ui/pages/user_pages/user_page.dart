@@ -33,15 +33,15 @@ class _UserPageState extends State<UserPage> {
           children: [
             UserContactInfo(user: widget.user),
             CompanyCard(
-                item: widget.user.company, address: widget.user.address),
+                item: widget.user.company, address: widget.user.address,),
             TextButton(
                 onPressed: () {
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {
                     return PostsListPage(userId: widget.user.id);
-                  }));
+                  },),);
                 },
-                child: Text("POSTS"))
+                child: const Text("POSTS"),)
           ],
         ),
       ),

@@ -21,25 +21,30 @@ class _PostsListPageState extends State<PostsListPage> {
     return Scaffold(
       appBar: AppBar(),
       body: FutureBuilder<List<Post>>(
-          future: repository.getPosts(widget.userId),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return ListView.builder(
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (context, index) {
-                    return PostCard(
-                      item: snapshot.data![index],
-                      onTap: () {
-                        Navigator.of(context)
-                            .push(MaterialPageRoute(builder: (context) {
+        future: repository.getPosts(widget.userId),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index) {
+                return PostCard(
+                  item: snapshot.data![index],
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) {
                           return PostPage(post: snapshot.data![index]);
-                        }));
-                      },
+                        },
+                      ),
                     );
-                  });
-            }
-            return LinearProgressIndicator();
-          }),
+                  },
+                );
+              },
+            );
+          }
+          return const LinearProgressIndicator();
+        },
+      ),
     );
   }
 }
