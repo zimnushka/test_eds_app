@@ -5,6 +5,8 @@ class Address {
   final String zipcode;
   final Coord geo;
 
+  String get fullAddress => "$city, $street $suite";
+
   const Address(
       {required this.city,
       required this.geo,
