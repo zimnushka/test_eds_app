@@ -10,7 +10,7 @@ class CommentCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-          border: Border.all(width: 0.1, color: Theme.of(context).shadowColor)),
+          border: Border.all(width: 0.1, color: Theme.of(context).shadowColor),),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,

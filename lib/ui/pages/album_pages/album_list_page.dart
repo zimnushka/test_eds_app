@@ -42,7 +42,7 @@ class _AlbumsListPageState extends State<AlbumsListPage> {
           albumsBox!.addAll(albums
                   .where((element) => element.userId != widget.userId)
                   .toList() +
-              value.data);
+              value.data,);
         }
       });
     }

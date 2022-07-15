@@ -59,7 +59,7 @@ class _UserPageState extends State<UserPage> {
           postsBox!.addAll(posts
                   .where((element) => element.userId != widget.user.id)
                   .toList() +
-              value.data);
+              value.data,);
         }
       });
     }
@@ -90,7 +90,7 @@ class _UserPageState extends State<UserPage> {
           albumsBox!.addAll(albums
                   .where((element) => element.userId != widget.user.id)
                   .toList() +
-              value.data);
+              value.data,);
         }
       });
     }
@@ -122,7 +122,7 @@ class _UserPageState extends State<UserPage> {
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Posts"),
+                  const Text("Posts"),
                   TextButton(
                     onPressed: () {
                       Navigator.of(context).push(
@@ -145,13 +145,13 @@ class _UserPageState extends State<UserPage> {
                           options: CarouselOptions(
                               height: 100,
                               aspectRatio:
-                                  MediaQuery.of(context).size.width / 100),
+                                  MediaQuery.of(context).size.width / 100,),
                           items: snapshot.data!
                               .getRange(
                                   0,
                                   snapshot.data!.length > 1
                                       ? 2
-                                      : snapshot.data!.length)
+                                      : snapshot.data!.length,)
                               .map(
                                 (e) => PostCard(
                                   item: e,
@@ -166,16 +166,16 @@ class _UserPageState extends State<UserPage> {
                                   },
                                 ),
                               )
-                              .toList());
+                              .toList(),);
                     }
-                    return LinearProgressIndicator();
-                  }),
+                    return const LinearProgressIndicator();
+                  },),
             ),
             ListTile(
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Albums"),
+                  const Text("Albums"),
                   TextButton(
                     onPressed: () {
                       Navigator.of(context).push(
@@ -198,13 +198,13 @@ class _UserPageState extends State<UserPage> {
                           options: CarouselOptions(
                               height: 100,
                               aspectRatio:
-                                  MediaQuery.of(context).size.width / 100),
+                                  MediaQuery.of(context).size.width / 100,),
                           items: snapshot.data!
                               .getRange(
                                   0,
                                   snapshot.data!.length > 1
                                       ? 2
-                                      : snapshot.data!.length)
+                                      : snapshot.data!.length,)
                               .map((e) => AlbumCard(
                                     item: e,
                                     onTap: () {
@@ -216,11 +216,11 @@ class _UserPageState extends State<UserPage> {
                                         ),
                                       );
                                     },
-                                  ))
-                              .toList());
+                                  ),)
+                              .toList(),);
                     }
-                    return LinearProgressIndicator();
-                  }),
+                    return const LinearProgressIndicator();
+                  },),
             ),
             const SizedBox(height: 20),
           ],

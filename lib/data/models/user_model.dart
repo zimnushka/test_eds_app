@@ -70,7 +70,7 @@ class UserAdapter extends TypeAdapter<User> {
         name: name,
         phone: phone,
         username: username,
-        website: website);
+        website: website,);
   }
 
   @override

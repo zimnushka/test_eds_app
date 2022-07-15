@@ -10,7 +10,7 @@ class PostsRepository extends Repository {
       List objects = jsonDecode(res.data);
       return ResponseData(
           data: objects.map((e) => Post.fromJson(e)).toList(),
-          isSuccesful: true);
+          isSuccesful: true,);
     }
     return const ResponseData(data: [], isSuccesful: false);
   }

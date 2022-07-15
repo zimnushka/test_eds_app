@@ -38,7 +38,7 @@ class CommentAdapter extends TypeAdapter<Comment> {
     final String email = reader.readString();
     final String body = reader.readString();
     return Comment(
-        body: body, email: email, id: id, name: name, postId: postId);
+        body: body, email: email, id: id, name: name, postId: postId,);
   }
 
   @override

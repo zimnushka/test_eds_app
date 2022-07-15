@@ -6,10 +6,10 @@ class Photo {
   final String title;
   final String url;
   final String thumbnailUrl;
-  final String? localUrl;
-  final String? loaclThumbnailUrl;
+  String? localUrl;
+  String? loaclThumbnailUrl;
 
-  const Photo({
+  Photo({
     required this.albumId,
     required this.id,
     required this.thumbnailUrl,
@@ -38,12 +38,17 @@ class PhotoAdapter extends TypeAdapter<Photo> {
     final String title = reader.readString();
     final String url = reader.readString();
     final String thumbnailUrl = reader.readString();
+    final String localUrl = reader.readString();
+    final String loaclThumbnailUrl = reader.readString();
     return Photo(
-        albumId: albumId,
-        id: id,
-        thumbnailUrl: thumbnailUrl,
-        title: title,
-        url: url);
+      albumId: albumId,
+      id: id,
+      thumbnailUrl: thumbnailUrl,
+      title: title,
+      url: url,
+      localUrl: localUrl.isEmpty ? null : localUrl,
+      loaclThumbnailUrl: loaclThumbnailUrl.isEmpty ? null : loaclThumbnailUrl,
+    );
   }
 
   @override
@@ -56,5 +61,7 @@ class PhotoAdapter extends TypeAdapter<Photo> {
     writer.writeString(obj.title);
     writer.writeString(obj.url);
     writer.writeString(obj.thumbnailUrl);
+    writer.writeString(obj.localUrl ?? "");
+    writer.writeString(obj.loaclThumbnailUrl ?? "");
   }
 }

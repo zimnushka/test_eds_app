@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:test_eds_app/data/models/photo_model.dart';
 
@@ -12,7 +14,9 @@ class PhotoCard extends StatelessWidget {
     return ListTile(
       onTap: onTap,
       contentPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 5),
-      leading: Image.network(photo.thumbnailUrl),
+      leading: photo.loaclThumbnailUrl != null
+          ? Image.file(File(photo.loaclThumbnailUrl!))
+          : Image.network(photo.thumbnailUrl),
       title: Text(photo.title),
     );
   }

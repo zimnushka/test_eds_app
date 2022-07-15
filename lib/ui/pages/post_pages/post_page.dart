@@ -28,7 +28,7 @@ class _PostPageState extends State<PostPage> {
           return CommentEditor(
             postId: widget.post.id,
           );
-        });
+        },);
   }
 
   Future<List<Comment>> load() async {
@@ -55,7 +55,7 @@ class _PostPageState extends State<PostPage> {
           commentsBox!.addAll(comments
                   .where((element) => element.postId != widget.post.id)
                   .toList() +
-              value.data);
+              value.data,);
         }
       });
     }
@@ -100,12 +100,12 @@ class _PostPageState extends State<PostPage> {
                     ),
                   );
                 }
-                return SliverToBoxAdapter(child: LinearProgressIndicator());
-              })
+                return const SliverToBoxAdapter(child: LinearProgressIndicator());
+              },)
         ],
       ),
       floatingActionButton:
-          FloatingActionButton(onPressed: addComment, child: Icon(Icons.chat)),
+          FloatingActionButton(onPressed: addComment, child: const Icon(Icons.chat)),
     );
   }
 }

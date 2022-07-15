@@ -10,7 +10,7 @@ class AlbumCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          border: Border.all(width: 0.1, color: Theme.of(context).shadowColor)),
+          border: Border.all(width: 0.1, color: Theme.of(context).shadowColor),),
       child: ListTile(
         contentPadding: const EdgeInsets.all(16),
         onTap: onTap,

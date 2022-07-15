@@ -42,7 +42,7 @@ class _PostsListPageState extends State<PostsListPage> {
           postsBox!.addAll(posts
                   .where((element) => element.userId != widget.userId)
                   .toList() +
-              value.data);
+              value.data,);
         }
       });
     }

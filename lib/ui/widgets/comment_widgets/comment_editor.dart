@@ -39,7 +39,7 @@ class _CommentEditorState extends State<CommentEditor> {
         email: emailController.text,
         id: -1,
         name: nameController.text,
-        postId: widget.postId));
+        postId: widget.postId,),);
     if (comment != null) {
       message = const ResponseData(data: "Comment sended", isSuccesful: true);
       Timer(const Duration(seconds: 1), () {
@@ -67,22 +67,22 @@ class _CommentEditorState extends State<CommentEditor> {
                 controller: nameController,
                 textCapitalization: TextCapitalization.sentences,
                 textInputAction: TextInputAction.next,
-                decoration: InputDecoration(hintText: "Name"),
+                decoration: const InputDecoration(hintText: "Name"),
               ),
               TextField(
                 controller: emailController,
                 textCapitalization: TextCapitalization.sentences,
                 textInputAction: TextInputAction.next,
                 keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(hintText: "Email"),
+                decoration: const InputDecoration(hintText: "Email"),
               ),
               ConstrainedBox(
-                constraints: BoxConstraints(maxHeight: 150),
+                constraints: const BoxConstraints(maxHeight: 150),
                 child: TextField(
                   controller: bodyController,
                   textCapitalization: TextCapitalization.sentences,
                   maxLines: null,
-                  decoration: InputDecoration(hintText: "Comment..."),
+                  decoration: const InputDecoration(hintText: "Comment..."),
                 ),
               ),
               message != null
@@ -99,9 +99,9 @@ class _CommentEditorState extends State<CommentEditor> {
                   : const SizedBox(height: 20),
               ElevatedButton(
                   style: TextButton.styleFrom(
-                      minimumSize: const Size(double.infinity, 50)),
+                      minimumSize: const Size(double.infinity, 50),),
                   onPressed: send,
-                  child: Text("Send"))
+                  child: const Text("Send"),)
             ],
           ),
         ),

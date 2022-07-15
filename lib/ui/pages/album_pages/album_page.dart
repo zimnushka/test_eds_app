@@ -1,5 +1,8 @@
+import 'dart:io';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:test_eds_app/data/models/album_model.dart';
 import 'package:test_eds_app/data/models/photo_model.dart';
 import 'package:test_eds_app/data/repositories/albums_repository.dart';
@@ -19,6 +22,15 @@ class _AlbumPageState extends State<AlbumPage> {
   final AlbumsRepository repository = AlbumsRepository();
   Box<Photo>? photosBox;
 
+  Future<String> savePhoto(String path, String url,
+      {bool isThumbnai = false,}) async {
+    var responseUrl = await http.get(Uri.parse(url));
+    File fileUrl =
+        File('$path/${url.split("/").last}${isThumbnai ? "thumbnai" : ""}');
+    fileUrl.writeAsBytesSync(responseUrl.bodyBytes);
+    return '$path/${url.split("/").last}${isThumbnai ? "thumbnai" : ""}';
+  }
+
   Future<List<Photo>> load() async {
     if (!Hive.isAdapterRegistered(PhotoAdapter().typeId)) {
       Hive.registerAdapter(PhotoAdapter());
@@ -32,6 +44,14 @@ class _AlbumPageState extends State<AlbumPage> {
         .toList();
     if (photos.isEmpty) {
       photos = (await repository.getAlbum(widget.albom.id)).data;
+      final directory = await getApplicationDocumentsDirectory();
+      for (var element in photos) {
+        element.localUrl = await savePhoto(directory.path, element.url);
+        element.loaclThumbnailUrl = await savePhoto(
+            directory.path, element.thumbnailUrl,
+            isThumbnai: true,);
+      }
+
       photosBox!.addAll(photos);
     } else {
       //FOR update local storage
@@ -43,7 +63,7 @@ class _AlbumPageState extends State<AlbumPage> {
           photosBox!.addAll(photos
                   .where((element) => element.albumId != widget.albom.id)
                   .toList() +
-              value.data);
+              value.data,);
         }
       });
     }
@@ -78,13 +98,13 @@ class _AlbumPageState extends State<AlbumPage> {
                             images: snapshot.data!,
                             index: index,
                           );
-                        }));
+                        },),);
                       },
                     );
-                  });
+                  },);
             }
-            return LinearProgressIndicator();
-          }),
+            return const LinearProgressIndicator();
+          },),
     );
   }
 }
