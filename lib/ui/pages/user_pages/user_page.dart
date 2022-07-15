@@ -56,10 +56,12 @@ class _UserPageState extends State<UserPage> {
           if (!mounted) return;
 
           postsBox!.clear();
-          postsBox!.addAll(posts
-                  .where((element) => element.userId != widget.user.id)
-                  .toList() +
-              value.data,);
+          postsBox!.addAll(
+            posts
+                    .where((element) => element.userId != widget.user.id)
+                    .toList() +
+                value.data,
+          );
         }
       });
     }
@@ -87,10 +89,12 @@ class _UserPageState extends State<UserPage> {
           if (!mounted) return;
 
           albumsBox!.clear();
-          albumsBox!.addAll(albums
-                  .where((element) => element.userId != widget.user.id)
-                  .toList() +
-              value.data,);
+          albumsBox!.addAll(
+            albums
+                    .where((element) => element.userId != widget.user.id)
+                    .toList() +
+                value.data,
+          );
         }
       });
     }
@@ -138,38 +142,41 @@ class _UserPageState extends State<UserPage> {
                 ],
               ),
               subtitle: FutureBuilder<List<Post>>(
-                  future: loadPosts(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                      return CarouselSlider(
-                          options: CarouselOptions(
-                              height: 100,
-                              aspectRatio:
-                                  MediaQuery.of(context).size.width / 100,),
-                          items: snapshot.data!
-                              .getRange(
-                                  0,
-                                  snapshot.data!.length > 1
-                                      ? 2
-                                      : snapshot.data!.length,)
-                              .map(
-                                (e) => PostCard(
-                                  item: e,
-                                  onTap: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) {
-                                          return PostPage(post: e);
-                                        },
-                                      ),
-                                    );
-                                  },
-                                ),
-                              )
-                              .toList(),);
-                    }
-                    return const LinearProgressIndicator();
-                  },),
+                future: loadPosts(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return CarouselSlider(
+                      options: CarouselOptions(
+                        height: 100,
+                        aspectRatio: MediaQuery.of(context).size.width / 100,
+                      ),
+                      items: snapshot.data!
+                          .getRange(
+                            0,
+                            snapshot.data!.length > 1
+                                ? 2
+                                : snapshot.data!.length,
+                          )
+                          .map(
+                            (e) => PostCard(
+                              item: e,
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return PostPage(post: e);
+                                    },
+                                  ),
+                                );
+                              },
+                            ),
+                          )
+                          .toList(),
+                    );
+                  }
+                  return const LinearProgressIndicator();
+                },
+              ),
             ),
             ListTile(
               title: Row(
@@ -191,36 +198,41 @@ class _UserPageState extends State<UserPage> {
                 ],
               ),
               subtitle: FutureBuilder<List<Album>>(
-                  future: loadAlbums(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return CarouselSlider(
-                          options: CarouselOptions(
-                              height: 100,
-                              aspectRatio:
-                                  MediaQuery.of(context).size.width / 100,),
-                          items: snapshot.data!
-                              .getRange(
-                                  0,
-                                  snapshot.data!.length > 1
-                                      ? 2
-                                      : snapshot.data!.length,)
-                              .map((e) => AlbumCard(
-                                    item: e,
-                                    onTap: () {
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (context) {
-                                            return AlbumPage(albom: e);
-                                          },
-                                        ),
-                                      );
+                future: loadAlbums(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return CarouselSlider(
+                      options: CarouselOptions(
+                        height: 100,
+                        aspectRatio: MediaQuery.of(context).size.width / 100,
+                      ),
+                      items: snapshot.data!
+                          .getRange(
+                            0,
+                            snapshot.data!.length > 1
+                                ? 2
+                                : snapshot.data!.length,
+                          )
+                          .map(
+                            (e) => AlbumCard(
+                              item: e,
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return AlbumPage(albom: e);
                                     },
-                                  ),)
-                              .toList(),);
-                    }
-                    return const LinearProgressIndicator();
-                  },),
+                                  ),
+                                );
+                              },
+                            ),
+                          )
+                          .toList(),
+                    );
+                  }
+                  return const LinearProgressIndicator();
+                },
+              ),
             ),
             const SizedBox(height: 20),
           ],
