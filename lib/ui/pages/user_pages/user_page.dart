@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:test_eds_app/data/repositories/users_repository.dart';
+import 'package:test_eds_app/ui/pages/album_pages/album_list_page.dart';
 import 'package:test_eds_app/ui/pages/post_pages/post_list_page.dart';
 import 'package:test_eds_app/ui/widgets/user_widgets/company_card.dart';
 import 'package:test_eds_app/ui/widgets/user_widgets/user_contact_info.dart';
@@ -33,15 +34,33 @@ class _UserPageState extends State<UserPage> {
           children: [
             UserContactInfo(user: widget.user),
             CompanyCard(
-                item: widget.user.company, address: widget.user.address,),
+              item: widget.user.company,
+              address: widget.user.address,
+            ),
             TextButton(
-                onPressed: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) {
-                    return PostsListPage(userId: widget.user.id);
-                  },),);
-                },
-                child: const Text("POSTS"),)
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return PostsListPage(userId: widget.user.id);
+                    },
+                  ),
+                );
+              },
+              child: const Text("POSTS"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return AlbumsListPage(userId: widget.user.id);
+                    },
+                  ),
+                );
+              },
+              child: const Text("ALBUMS"),
+            )
           ],
         ),
       ),
