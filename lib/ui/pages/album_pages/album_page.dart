@@ -4,6 +4,8 @@ import 'package:test_eds_app/data/models/photo_model.dart';
 import 'package:test_eds_app/data/repositories/albums_repository.dart';
 import 'package:test_eds_app/ui/widgets/album_widget/photo_card.dart';
 
+import '../../widgets/album_widget/image_viever.dart';
+
 class AlbumPage extends StatefulWidget {
   const AlbumPage({Key? key, required this.albom}) : super(key: key);
   final Album albom;
@@ -25,16 +27,21 @@ class _AlbumPageState extends State<AlbumPage> {
           future: repository.getAlbum(widget.albom.id),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                    childAspectRatio: 1,
-                    mainAxisSpacing: 10,
-                    crossAxisSpacing: 10,
-                    maxCrossAxisExtent: 600,
-                  ),
+              return ListView.builder(
                   itemCount: snapshot.data!.length,
                   itemBuilder: (context, index) {
-                    return PhotoCard(photo: snapshot.data![index]);
+                    return PhotoCard(
+                      photo: snapshot.data![index],
+                      onTap: () {
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return ImageViewPage(
+                            images: snapshot.data!,
+                            index: index,
+                          );
+                        }));
+                      },
+                    );
                   });
             }
             return LinearProgressIndicator();

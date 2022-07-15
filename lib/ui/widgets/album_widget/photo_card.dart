@@ -10,6 +10,8 @@ class PhotoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: onTap,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 5),
       leading: Image.network(photo.thumbnailUrl),
       title: Text(photo.title),
     );
