@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:test_eds_app/data/models/comment_model.dart';
 import 'package:test_eds_app/data/repositories/comments_repository.dart';
@@ -32,13 +34,21 @@ class _CommentEditorState extends State<CommentEditor> {
     message = null;
     load = true;
     setState(() {});
-    final _comment = await CommentsRepository().sendComment(Comment(
+    final comment = await CommentsRepository().sendComment(Comment(
         body: bodyController.text,
         email: emailController.text,
         id: -1,
         name: nameController.text,
         postId: widget.postId));
-    if (_comment != null) {}
+    if (comment != null) {
+      message = const ResponseData(data: "Comment sended", isSuccesful: true);
+      Timer(const Duration(seconds: 1), () {
+        Navigator.of(context).pop();
+      });
+    } else {
+      message =
+          const ResponseData(data: "Comment sended error", isSuccesful: true);
+    }
     load = false;
     setState(() {});
   }
@@ -48,37 +58,52 @@ class _CommentEditorState extends State<CommentEditor> {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: SingleChildScrollView(
-        child: Column(
-          children: [
-            TextField(
-              controller: nameController,
-              textCapitalization: TextCapitalization.sentences,
-              textInputAction: TextInputAction.next,
-              decoration: InputDecoration(hintText: "Name"),
-            ),
-            TextField(
-              controller: emailController,
-              textCapitalization: TextCapitalization.sentences,
-              textInputAction: TextInputAction.next,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(hintText: "Email"),
-            ),
-            ConstrainedBox(
-              constraints: BoxConstraints(maxHeight: 150),
-              child: TextField(
-                controller: bodyController,
+        child: Padding(
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: Column(
+            children: [
+              TextField(
+                controller: nameController,
                 textCapitalization: TextCapitalization.sentences,
-                maxLines: null,
-                decoration: InputDecoration(hintText: "Comment..."),
+                textInputAction: TextInputAction.next,
+                decoration: InputDecoration(hintText: "Name"),
               ),
-            ),
-            const SizedBox(height: 15),
-            ElevatedButton(
-                style: TextButton.styleFrom(
-                    minimumSize: const Size(double.infinity, 50)),
-                onPressed: send,
-                child: Text("Send"))
-          ],
+              TextField(
+                controller: emailController,
+                textCapitalization: TextCapitalization.sentences,
+                textInputAction: TextInputAction.next,
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(hintText: "Email"),
+              ),
+              ConstrainedBox(
+                constraints: BoxConstraints(maxHeight: 150),
+                child: TextField(
+                  controller: bodyController,
+                  textCapitalization: TextCapitalization.sentences,
+                  maxLines: null,
+                  decoration: InputDecoration(hintText: "Comment..."),
+                ),
+              ),
+              message != null
+                  ? ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: Icon(
+                        Icons.info,
+                        color: message!.isSuccesful != true
+                            ? Theme.of(context).errorColor
+                            : Theme.of(context).primaryColor,
+                      ),
+                      title: Text(message!.data),
+                    )
+                  : const SizedBox(height: 20),
+              ElevatedButton(
+                  style: TextButton.styleFrom(
+                      minimumSize: const Size(double.infinity, 50)),
+                  onPressed: send,
+                  child: Text("Send"))
+            ],
+          ),
         ),
       ),
     );

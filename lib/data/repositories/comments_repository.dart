@@ -19,9 +19,8 @@ class CommentsRepository extends Repository {
         url: "comments",
         headers: {'Content-type': 'application/json; charset=UTF-8'},
         parametrs: jsonEncode(comment.toJson));
-    print(res.data);
-    if (res.status == 200) {
-      return comment;
+    if (res.status == 201) {
+      return Comment.fromJson(jsonDecode(res.data));
     }
     return null;
   }
