@@ -6,6 +6,8 @@ class Photo {
   final String title;
   final String url;
   final String thumbnailUrl;
+  final String? localUrl;
+  final String? loaclThumbnailUrl;
 
   const Photo({
     required this.albumId,
@@ -13,6 +15,8 @@ class Photo {
     required this.thumbnailUrl,
     required this.title,
     required this.url,
+    this.localUrl,
+    this.loaclThumbnailUrl,
   });
 
   static Photo fromJson(Map<String, dynamic> json) {
