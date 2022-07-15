@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:test_eds_app/data/models/album_model.dart';
 import 'package:test_eds_app/data/models/post_model.dart';
 import 'package:test_eds_app/data/repositories/users_repository.dart';
@@ -11,6 +12,8 @@ import 'package:test_eds_app/ui/widgets/user_widgets/company_card.dart';
 import 'package:test_eds_app/ui/widgets/user_widgets/user_contact_info.dart';
 
 import '../../../data/models/user_model.dart';
+import '../../../data/repositories/albums_repository.dart';
+import '../../../data/repositories/posts_repository.dart';
 import '../album_pages/album_page.dart';
 import '../post_pages/post_page.dart';
 
@@ -19,8 +22,6 @@ class UserPage extends StatefulWidget {
     Key? key,
     required this.user,
   }) : super(key: key);
-
-  // id for request check and update local date
   final User user;
 
   @override
@@ -29,6 +30,79 @@ class UserPage extends StatefulWidget {
 
 class _UserPageState extends State<UserPage> {
   final UsersRepository repository = UsersRepository();
+  final PostsRepository postsRepository = PostsRepository();
+  Box<Post>? postsBox;
+  final AlbumsRepository albumsRepository = AlbumsRepository();
+  Box<Album>? albumsBox;
+
+  Future<List<Post>> loadPosts() async {
+    if (!Hive.isAdapterRegistered(PostAdapter().typeId)) {
+      Hive.registerAdapter(PostAdapter());
+    }
+    if (postsBox == null || postsBox?.isOpen != true) {
+      postsBox = await Hive.openBox<Post>('post');
+    }
+
+    List<Post> posts = postsBox!.values
+        .where((element) => element.userId == widget.user.id)
+        .toList();
+    if (posts.isEmpty) {
+      posts = (await postsRepository.getPosts(widget.user.id)).data;
+      postsBox!.addAll(posts);
+    } else {
+      //FOR update local storage
+      postsRepository.getPosts(widget.user.id).then((value) {
+        if (value.isSuccesful == true) {
+          if (!mounted) return;
+
+          postsBox!.clear();
+          postsBox!.addAll(posts
+                  .where((element) => element.userId != widget.user.id)
+                  .toList() +
+              value.data);
+        }
+      });
+    }
+    return posts;
+  }
+
+  Future<List<Album>> loadAlbums() async {
+    if (!Hive.isAdapterRegistered(AlbumAdapter().typeId)) {
+      Hive.registerAdapter(AlbumAdapter());
+    }
+    if (albumsBox == null || albumsBox?.isOpen != true) {
+      albumsBox = await Hive.openBox<Album>('album');
+    }
+
+    List<Album> albums = albumsBox!.values
+        .where((element) => element.userId == widget.user.id)
+        .toList();
+    if (albums.isEmpty) {
+      albums = (await albumsRepository.getAlbums(widget.user.id)).data;
+      albumsBox!.addAll(albums);
+    } else {
+      //FOR update local storage
+      albumsRepository.getAlbums(widget.user.id).then((value) {
+        if (value.isSuccesful == true) {
+          if (!mounted) return;
+
+          albumsBox!.clear();
+          albumsBox!.addAll(albums
+                  .where((element) => element.userId != widget.user.id)
+                  .toList() +
+              value.data);
+        }
+      });
+    }
+    return albums;
+  }
+
+  @override
+  void dispose() {
+    postsBox?.close();
+    albumsBox?.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +138,7 @@ class _UserPageState extends State<UserPage> {
                 ],
               ),
               subtitle: FutureBuilder<List<Post>>(
-                  future: repository.getUserPosts(widget.user.id),
+                  future: loadPosts(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                       return CarouselSlider(
@@ -117,7 +191,7 @@ class _UserPageState extends State<UserPage> {
                 ],
               ),
               subtitle: FutureBuilder<List<Album>>(
-                  future: repository.getUserAlbums(widget.user.id),
+                  future: loadAlbums(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       return CarouselSlider(

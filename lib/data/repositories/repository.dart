@@ -82,8 +82,8 @@ abstract class Repository {
   }
 }
 
-class ResponseData {
-  final String data;
+class ResponseData<T> {
+  final T data;
   final int? status;
   final bool? isSuccesful;
 

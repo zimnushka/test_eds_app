@@ -7,30 +7,36 @@ import '../models/album_model.dart';
 import '../models/post_model.dart';
 
 class UsersRepository extends Repository {
-  Future<List<User>> getUsers() async {
+  Future<ResponseData<List<User>>> getUsers() async {
     final res = await getRequest("users", headers: {});
     if (res.status == 200) {
       List objects = jsonDecode(res.data);
-      return objects.map((e) => User.fromJson(e)).toList();
+      return ResponseData(
+          data: objects.map((e) => User.fromJson(e)).toList(),
+          isSuccesful: true);
     }
-    return [];
+    return const ResponseData(data: [], isSuccesful: false);
   }
 
-  Future<List<Post>> getUserPosts(int userId) async {
+  Future<ResponseData<List<Post>>> getUserPosts(int userId) async {
     final res = await getRequest("users/$userId/posts", headers: {});
     if (res.status == 200) {
       List objects = jsonDecode(res.data);
-      return objects.map((e) => Post.fromJson(e)).toList();
+      return ResponseData(
+          data: objects.map((e) => Post.fromJson(e)).toList(),
+          isSuccesful: true);
     }
-    return [];
+    return const ResponseData(data: [], isSuccesful: false);
   }
 
-  Future<List<Album>> getUserAlbums(int userId) async {
+  Future<ResponseData<List<Album>>> getUserAlbums(int userId) async {
     final res = await getRequest("users/$userId/albums", headers: {});
     if (res.status == 200) {
       List objects = jsonDecode(res.data);
-      return objects.map((e) => Album.fromJson(e)).toList();
+      return ResponseData(
+          data: objects.map((e) => Album.fromJson(e)).toList(),
+          isSuccesful: true);
     }
-    return [];
+    return const ResponseData(data: [], isSuccesful: false);
   }
 }

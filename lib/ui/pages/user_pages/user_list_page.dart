@@ -26,13 +26,15 @@ class _UsersListPageState extends State<UsersListPage> {
 
     List<User> users = usersBox!.values.toList();
     if (users.isEmpty) {
-      users = await repository.getUsers();
+      users = (await repository.getUsers()).data;
       usersBox!.addAll(users);
     } else {
       repository.getUsers().then((value) {
-        if (!mounted) return;
-        usersBox!.clear();
-        usersBox!.addAll(value);
+        if (value.isSuccesful == true) {
+          if (!mounted) return;
+          usersBox!.clear();
+          usersBox!.addAll(value.data);
+        }
       });
     }
     return users;
