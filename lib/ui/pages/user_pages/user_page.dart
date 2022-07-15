@@ -11,6 +11,8 @@ import 'package:test_eds_app/ui/widgets/user_widgets/company_card.dart';
 import 'package:test_eds_app/ui/widgets/user_widgets/user_contact_info.dart';
 
 import '../../../data/models/user_model.dart';
+import '../album_pages/album_page.dart';
+import '../post_pages/post_page.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({
@@ -64,27 +66,33 @@ class _UserPageState extends State<UserPage> {
               subtitle: FutureBuilder<List<Post>>(
                   future: repository.getUserPosts(widget.user.id),
                   builder: (context, snapshot) {
-                    if (snapshot.hasData) {
+                    if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                       return CarouselSlider(
-                        options: CarouselOptions(
-                            height: 100,
-                            aspectRatio:
-                                MediaQuery.of(context).size.width / 100),
-                        items: [
-                          PostCard(
-                            item: snapshot.data![0],
-                            onTap: () {},
-                          ),
-                          PostCard(
-                            item: snapshot.data![1],
-                            onTap: () {},
-                          ),
-                          PostCard(
-                            item: snapshot.data![2],
-                            onTap: () {},
-                          ),
-                        ],
-                      );
+                          options: CarouselOptions(
+                              height: 100,
+                              aspectRatio:
+                                  MediaQuery.of(context).size.width / 100),
+                          items: snapshot.data!
+                              .getRange(
+                                  0,
+                                  snapshot.data!.length > 1
+                                      ? 2
+                                      : snapshot.data!.length)
+                              .map(
+                                (e) => PostCard(
+                                  item: e,
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) {
+                                          return PostPage(post: e);
+                                        },
+                                      ),
+                                    );
+                                  },
+                                ),
+                              )
+                              .toList());
                     }
                     return LinearProgressIndicator();
                   }),
@@ -113,29 +121,34 @@ class _UserPageState extends State<UserPage> {
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       return CarouselSlider(
-                        options: CarouselOptions(
-                            height: 100,
-                            aspectRatio:
-                                MediaQuery.of(context).size.width / 100),
-                        items: [
-                          AlbumCard(
-                            item: snapshot.data![0],
-                            onTap: () {},
-                          ),
-                          AlbumCard(
-                            item: snapshot.data![1],
-                            onTap: () {},
-                          ),
-                          AlbumCard(
-                            item: snapshot.data![2],
-                            onTap: () {},
-                          ),
-                        ],
-                      );
+                          options: CarouselOptions(
+                              height: 100,
+                              aspectRatio:
+                                  MediaQuery.of(context).size.width / 100),
+                          items: snapshot.data!
+                              .getRange(
+                                  0,
+                                  snapshot.data!.length > 1
+                                      ? 2
+                                      : snapshot.data!.length)
+                              .map((e) => AlbumCard(
+                                    item: e,
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) {
+                                            return AlbumPage(albom: e);
+                                          },
+                                        ),
+                                      );
+                                    },
+                                  ))
+                              .toList());
                     }
                     return LinearProgressIndicator();
                   }),
             ),
+            const SizedBox(height: 20),
           ],
         ),
       ),
