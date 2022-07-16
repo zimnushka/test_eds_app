@@ -34,20 +34,17 @@ class _CommentEditorState extends State<CommentEditor> {
     message = null;
     load = true;
     setState(() {});
-    final comment = await CommentsRepository().sendComment(Comment(
+    message = await CommentsRepository().sendComment(Comment(
         body: bodyController.text,
         email: emailController.text,
         id: -1,
         name: nameController.text,
-        postId: widget.postId,),);
-    if (comment != null) {
+        postId: widget.postId));
+    if (message?.isSuccesful == true) {
       message = const ResponseData(data: "Comment sended", isSuccesful: true);
       Timer(const Duration(seconds: 1), () {
         Navigator.of(context).pop();
       });
-    } else {
-      message =
-          const ResponseData(data: "Comment sended error", isSuccesful: true);
     }
     load = false;
     setState(() {});
@@ -98,10 +95,12 @@ class _CommentEditorState extends State<CommentEditor> {
                     )
                   : const SizedBox(height: 20),
               ElevatedButton(
-                  style: TextButton.styleFrom(
-                      minimumSize: const Size(double.infinity, 50),),
-                  onPressed: send,
-                  child: const Text("Send"),)
+                style: TextButton.styleFrom(
+                  minimumSize: const Size(double.infinity, 50),
+                ),
+                onPressed: send,
+                child: const Text("Send"),
+              )
             ],
           ),
         ),

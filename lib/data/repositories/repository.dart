@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 abstract class Repository {
   static const homeUrl = "https://jsonplaceholder.typicode.com/";
   static const int _countSecTimeOut = 10;
-  static const String _timeOutMessage = "Ошибка подключения к серверу";
+  static const String _timeOutMessage = "Server connection error";
 
   Future<ResponseData> postRequest({
     required String url,

@@ -10,20 +10,19 @@ class CommentsRepository extends Repository {
     if (res.status == 200) {
       List objects = jsonDecode(res.data);
       return ResponseData(
-          data: objects.map((e) => Comment.fromJson(e)).toList(),
-          isSuccesful: true,);
+        data: objects.map((e) => Comment.fromJson(e)).toList(),
+        isSuccesful: true,
+      );
     }
     return const ResponseData(data: [], isSuccesful: false);
   }
 
-  Future<Comment?> sendComment(Comment comment) async {
+  Future<ResponseData> sendComment(Comment comment) async {
     final res = await postRequest(
         url: "comments",
         headers: {'Content-type': 'application/json; charset=UTF-8'},
-        parametrs: jsonEncode(comment.toJson),);
-    if (res.status == 201) {
-      return Comment.fromJson(jsonDecode(res.data));
-    }
-    return null;
+        parametrs: jsonEncode(comment.toJson));
+
+    return ResponseData(data: res.data, isSuccesful: res.status == 201);
   }
 }
