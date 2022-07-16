@@ -22,32 +22,17 @@ class _AlbumPageState extends State<AlbumPage> {
   final AlbumsRepository repository = AlbumsRepository();
   Box<Photo>? photosBox;
 
-  Future<String> saveFile(
-    String url, {
-    bool isThumbnai = false,
-  }) async {
-    var responseUrl = await http.get(Uri.parse(url));
-    final directory = await getApplicationDocumentsDirectory();
-    File fileUrl = File(
-        '${directory.path}/${url.split("/").last}${isThumbnai ? "thumbnai" : ""}');
-    fileUrl.writeAsBytesSync(responseUrl.bodyBytes);
-    return '${directory.path}/${url.split("/").last}${isThumbnai ? "thumbnai" : ""}';
-  }
-
-  savePhoto(Photo photo) async {
-    if (!mounted) return;
-    print(photosBox!.values.length);
-    photosBox!.delete(photo);
-    print(photosBox!.values.length);
-    photo.localUrl = await saveFile(photo.url);
-    photo.loaclThumbnailUrl = await saveFile(
-      photo.thumbnailUrl,
-      isThumbnai: true,
-    );
-    if (!mounted) return;
-    photosBox!.add(photo);
-    print(photosBox!.values.length);
-  }
+  // Future<String> savePhoto(
+  //   String path,
+  //   String url, {
+  //   bool isThumbnai = false,
+  // }) async {
+  //   var responseUrl = await http.get(Uri.parse(url));
+  //   File fileUrl =
+  //       File('$path/${url.split("/").last}${isThumbnai ? "thumbnai" : ""}');
+  //   fileUrl.writeAsBytesSync(responseUrl.bodyBytes);
+  //   return '$path/${url.split("/").last}${isThumbnai ? "thumbnai" : ""}';
+  // }
 
   Future<List<Photo>> load() async {
     if (!Hive.isAdapterRegistered(PhotoAdapter().typeId)) {
@@ -62,6 +47,16 @@ class _AlbumPageState extends State<AlbumPage> {
         .toList();
     if (photos.isEmpty) {
       photos = (await repository.getAlbum(widget.albom.id)).data;
+      // final directory = await getApplicationDocumentsDirectory();
+      // for (var element in photos) {
+      //   element.localUrl = await savePhoto(directory.path, element.url);
+      //   element.loaclThumbnailUrl = await savePhoto(
+      //     directory.path,
+      //     element.thumbnailUrl,
+      //     isThumbnai: true,
+      //   );
+      // }
+
       photosBox!.addAll(photos);
     } else {
       //FOR update local storage
@@ -103,8 +98,7 @@ class _AlbumPageState extends State<AlbumPage> {
               itemBuilder: (context, index) {
                 return PhotoCard(
                   photo: snapshot.data![index],
-                  onTap: () async {
-                    savePhoto(snapshot.data![index]);
+                  onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) {

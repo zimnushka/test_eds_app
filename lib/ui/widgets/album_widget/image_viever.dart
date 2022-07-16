@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
@@ -31,18 +32,12 @@ class _ImageViewPageState extends State<ImageViewPage> {
             pageController: controller,
             itemCount: widget.images.length,
             builder: (context, index) {
-              return widget.images[index].localUrl != null
-                  ? PhotoViewGalleryPageOptions(
-                      minScale: PhotoViewComputedScale.contained,
-                      maxScale: PhotoViewComputedScale.covered,
-                      imageProvider:
-                          FileImage(File(widget.images[index].localUrl!)),
-                    )
-                  : PhotoViewGalleryPageOptions(
-                      minScale: PhotoViewComputedScale.contained,
-                      maxScale: PhotoViewComputedScale.covered,
-                      imageProvider: NetworkImage(widget.images[index].url),
-                    );
+              return PhotoViewGalleryPageOptions(
+                minScale: PhotoViewComputedScale.contained,
+                maxScale: PhotoViewComputedScale.covered,
+                imageProvider:
+                    CachedNetworkImageProvider(widget.images[index].url),
+              );
             },
           ),
           Positioned(
