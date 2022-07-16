@@ -15,7 +15,6 @@ import '../../../data/models/user_model.dart';
 import '../../../data/repositories/albums_repository.dart';
 import '../../../data/repositories/posts_repository.dart';
 import '../album_pages/album_page.dart';
-import '../post_pages/post_page.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({
@@ -158,18 +157,7 @@ class _UserPageState extends State<UserPage> {
                                 : snapshot.data!.length,
                           )
                           .map(
-                            (e) => PostCard(
-                              item: e,
-                              onTap: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return PostPage(post: e);
-                                    },
-                                  ),
-                                );
-                              },
-                            ),
+                            (e) => PostCard(item: e),
                           )
                           .toList(),
                     );
@@ -214,18 +202,7 @@ class _UserPageState extends State<UserPage> {
                                 : snapshot.data!.length,
                           )
                           .map(
-                            (e) => AlbumCard(
-                              item: e,
-                              onTap: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return AlbumPage(albom: e);
-                                    },
-                                  ),
-                                );
-                              },
-                            ),
+                            (e) => AlbumCard(item: e),
                           )
                           .toList(),
                     );

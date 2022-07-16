@@ -39,10 +39,10 @@ class _PostsListPageState extends State<PostsListPage> {
           if (!mounted) return;
 
           postsBox!.clear();
-          postsBox!.addAll(posts
-                  .where((element) => element.userId != widget.userId)
-                  .toList() +
-              value.data,);
+          postsBox!.addAll(
+            posts.where((element) => element.userId != widget.userId).toList() +
+                value.data,
+          );
         }
       });
     }
@@ -68,15 +68,6 @@ class _PostsListPageState extends State<PostsListPage> {
               itemBuilder: (context, index) {
                 return PostCard(
                   item: snapshot.data![index],
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return PostPage(post: snapshot.data![index]);
-                        },
-                      ),
-                    );
-                  },
                 );
               },
             );

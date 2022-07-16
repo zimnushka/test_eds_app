@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:test_eds_app/data/models/user_model.dart';
@@ -49,6 +51,9 @@ class _UsersListPageState extends State<UsersListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Users"),
+      ),
       body: FutureBuilder<List<User>>(
         future: load(),
         builder: (context, snapshot) {

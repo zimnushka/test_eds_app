@@ -39,10 +39,12 @@ class _AlbumsListPageState extends State<AlbumsListPage> {
           if (!mounted) return;
 
           albumsBox!.clear();
-          albumsBox!.addAll(albums
-                  .where((element) => element.userId != widget.userId)
-                  .toList() +
-              value.data,);
+          albumsBox!.addAll(
+            albums
+                    .where((element) => element.userId != widget.userId)
+                    .toList() +
+                value.data,
+          );
         }
       });
     }
@@ -68,15 +70,6 @@ class _AlbumsListPageState extends State<AlbumsListPage> {
               itemBuilder: (context, index) {
                 return AlbumCard(
                   item: snapshot.data![index],
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return AlbumPage(albom: snapshot.data![index]);
-                        },
-                      ),
-                    );
-                  },
                 );
               },
             );
