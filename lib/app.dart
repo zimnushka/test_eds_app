@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:test_eds_app/ui/pages/test_isolate/home_page.dart';
+import 'package:test_eds_app/ui/pages/test_platform_chanel/home_page.dart';
 
 import 'ui/pages/user_pages/user_list_page.dart';
 
@@ -25,7 +27,8 @@ class MyApp extends StatelessWidget {
         ),
         primarySwatch: Colors.green,
       ),
-      home: const UsersListPage(),
+      // home: const UsersListPage(),
+      home: const HomePagePlatformChanelTest(),
     );
   }
 }
